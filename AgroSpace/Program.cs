@@ -1,4 +1,6 @@
 using AgroSpace.Services;
+using Microsoft.AspNetCore.Builder;
+using Scalar.AspNetCore;
 
 namespace AgroSpace;
 
@@ -36,6 +38,12 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
+            app.MapScalarApiReference(options =>
+            {
+                options.WithTitle("AgroSpace API");
+                options.WithTheme(ScalarTheme.BluePlanet);
+                options.WithSidebar(true);
+            });
         }
 
         // Use CORS - должно быть в начале pipeline

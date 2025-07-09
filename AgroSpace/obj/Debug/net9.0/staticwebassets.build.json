@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Jh0eode7uRuhPyLfYjtZLqFwwASLI3tS9/AAfbaImvU=",
+  "Hash": "R6VrS+sHEYv4WDvyl39RpzebOs+gH8uWqu2ZnamGb80=",
   "Source": "AgroSpace",
   "BasePath": "_content/AgroSpace",
   "Mode": "Default",
@@ -31,8 +31,8 @@
       "RelatedAsset": "F:\\VS_Code_Projects\\AgroSpace-v1\\AgroSpace\\wwwroot\\index.html",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "j9cnecb81z",
-      "Integrity": "KTTEZXtRqLa75U0mIVj5nhAJYYED+t/lA0zZIAKJ7JI=",
+      "Fingerprint": "277vo01ayb",
+      "Integrity": "Lt44t783CYYMPbkocKMN54CcnCsQxJ89RDtFkF4X5XA=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "F:\\VS_Code_Projects\\AgroSpace-v1\\AgroSpace\\wwwroot\\index.html"
@@ -273,7 +273,7 @@
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000172235618"
+          "Quality": "0.000171762281"
         }
       ],
       "ResponseHeaders": [
@@ -283,11 +283,11 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5805"
+          "Value": "5821"
         },
         {
           "Name": "ETag",
-          "Value": "\"KTTEZXtRqLa75U0mIVj5nhAJYYED+t/lA0zZIAKJ7JI=\""
+          "Value": "\"Lt44t783CYYMPbkocKMN54CcnCsQxJ89RDtFkF4X5XA=\""
         },
         {
           "Name": "Last-Modified",
@@ -385,7 +385,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5805"
+          "Value": "5821"
         },
         {
           "Name": "Content-Type",
@@ -393,7 +393,7 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"KTTEZXtRqLa75U0mIVj5nhAJYYED+t/lA0zZIAKJ7JI=\""
+          "Value": "\"Lt44t783CYYMPbkocKMN54CcnCsQxJ89RDtFkF4X5XA=\""
         },
         {
           "Name": "Last-Modified",
@@ -423,7 +423,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-KTTEZXtRqLa75U0mIVj5nhAJYYED+t/lA0zZIAKJ7JI="
+          "Value": "sha256-Lt44t783CYYMPbkocKMN54CcnCsQxJ89RDtFkF4X5XA="
         }
       ]
     },
@@ -434,7 +434,7 @@
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000172235618"
+          "Quality": "0.000171762281"
         }
       ],
       "ResponseHeaders": [
@@ -444,11 +444,11 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5805"
+          "Value": "5821"
         },
         {
           "Name": "ETag",
-          "Value": "\"KTTEZXtRqLa75U0mIVj5nhAJYYED+t/lA0zZIAKJ7JI=\""
+          "Value": "\"Lt44t783CYYMPbkocKMN54CcnCsQxJ89RDtFkF4X5XA=\""
         },
         {
           "Name": "Last-Modified",
@@ -530,7 +530,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5805"
+          "Value": "5821"
         },
         {
           "Name": "Content-Type",
@@ -538,7 +538,7 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"KTTEZXtRqLa75U0mIVj5nhAJYYED+t/lA0zZIAKJ7JI=\""
+          "Value": "\"Lt44t783CYYMPbkocKMN54CcnCsQxJ89RDtFkF4X5XA=\""
         },
         {
           "Name": "Last-Modified",
@@ -560,7 +560,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-KTTEZXtRqLa75U0mIVj5nhAJYYED+t/lA0zZIAKJ7JI="
+          "Value": "sha256-Lt44t783CYYMPbkocKMN54CcnCsQxJ89RDtFkF4X5XA="
         }
       ]
     }
