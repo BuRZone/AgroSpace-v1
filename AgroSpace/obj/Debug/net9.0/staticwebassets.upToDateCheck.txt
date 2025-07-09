@@ -1,4 +1,0 @@
-F:\VS_Code_Projects\AgroSpace-v1\AgroSpace\wwwroot\index.html
-wwwroot\coord\centroids.kml
-wwwroot\coord\fields.kml
-wwwroot\index.html
