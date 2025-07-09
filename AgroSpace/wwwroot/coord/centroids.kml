@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document id="root_doc">
+<Schema name="centroids" id="centroids">
+	<SimpleField name="fid" type="float"></SimpleField>
+	<SimpleField name="size" type="float"></SimpleField>
+</Schema>
+<Folder><name>centroids</name>
+  <Placemark>
+	<name>м01</name>
+	<ExtendedData><SchemaData schemaUrl="#centroids">
+		<SimpleData name="fid">1</SimpleData>
+		<SimpleData name="size">100</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>41.3380610642585,45.6962567581079</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>м02</name>
+	<ExtendedData><SchemaData schemaUrl="#centroids">
+		<SimpleData name="fid">2</SimpleData>
+		<SimpleData name="size">102</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>41.3446094979473,45.6962850655506</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>м03</name>
+	<ExtendedData><SchemaData schemaUrl="#centroids">
+		<SimpleData name="fid">3</SimpleData>
+		<SimpleData name="size">125</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>41.350684369682,45.6964865925129</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>м04</name>
+	<ExtendedData><SchemaData schemaUrl="#centroids">
+		<SimpleData name="fid">4</SimpleData>
+		<SimpleData name="size">140</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>41.3577392662274,45.6963629046498</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>м05</name>
+	<ExtendedData><SchemaData schemaUrl="#centroids">
+		<SimpleData name="fid">5</SimpleData>
+		<SimpleData name="size">34</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>41.3508506459343,45.7115849286145</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>м06</name>
+	<ExtendedData><SchemaData schemaUrl="#centroids">
+		<SimpleData name="fid">6</SimpleData>
+		<SimpleData name="size">76</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>41.3610577583899,45.7101563529516</coordinates></Point>
+  </Placemark>
+</Folder>
+</Document></kml>

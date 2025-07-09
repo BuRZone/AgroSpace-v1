@@ -1,0 +1,35 @@
+### Получение всех полей
+GET https://localhost:7001/api/fields
+Accept: application/json
+
+### Получение площади поля по ID
+GET https://localhost:7001/api/fields/1/size
+Accept: application/json
+
+### Вычисление расстояния от центра поля до точки
+POST https://localhost:7001/api/fields/distance
+Content-Type: application/json
+
+{
+  "fieldId": 1,
+  "lat": 41.3380610642585,
+  "lng": 45.6962567581079
+}
+
+### Проверка принадлежности точки к полю
+POST https://localhost:7001/api/fields/point-location
+Content-Type: application/json
+
+{
+  "lat": 41.3380610642585,
+  "lng": 45.6962567581079
+}
+
+### Проверка точки вне полей
+POST https://localhost:7001/api/fields/point-location
+Content-Type: application/json
+
+{
+  "lat": 41.0,
+  "lng": 45.0
+}

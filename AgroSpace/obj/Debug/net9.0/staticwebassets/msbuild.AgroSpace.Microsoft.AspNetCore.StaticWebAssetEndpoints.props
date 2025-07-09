@@ -1,0 +1,40 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/AgroSpace/coord/centroids.kml">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\coord\centroids.kml'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-t4A8n1jlO4mGcQKGqP6p8ruOK\u002BLQq0jymU2D1aid6zw="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"2088"},{"Name":"Content-Type","Value":"application/octet-stream"},{"Name":"ETag","Value":"\u0022t4A8n1jlO4mGcQKGqP6p8ruOK\u002BLQq0jymU2D1aid6zw=\u0022"},{"Name":"Last-Modified","Value":"Wed, 09 Jul 2025 18:55:01 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/AgroSpace/coord/centroids.xqc3w7cfwu.kml">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\coord\centroids.kml'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"xqc3w7cfwu"},{"Name":"integrity","Value":"sha256-t4A8n1jlO4mGcQKGqP6p8ruOK\u002BLQq0jymU2D1aid6zw="},{"Name":"label","Value":"_content/AgroSpace/coord/centroids.kml"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2088"},{"Name":"Content-Type","Value":"application/octet-stream"},{"Name":"ETag","Value":"\u0022t4A8n1jlO4mGcQKGqP6p8ruOK\u002BLQq0jymU2D1aid6zw=\u0022"},{"Name":"Last-Modified","Value":"Wed, 09 Jul 2025 18:55:01 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/AgroSpace/coord/fields.a2lmi0r9mx.kml">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\coord\fields.kml'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"a2lmi0r9mx"},{"Name":"integrity","Value":"sha256-IlY\u002BTZdg9TV/PLL2hT0Ht0JfzzYFY/DkqR3wM4OKuSg="},{"Name":"label","Value":"_content/AgroSpace/coord/fields.kml"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"4562"},{"Name":"Content-Type","Value":"application/octet-stream"},{"Name":"ETag","Value":"\u0022IlY\u002BTZdg9TV/PLL2hT0Ht0JfzzYFY/DkqR3wM4OKuSg=\u0022"},{"Name":"Last-Modified","Value":"Wed, 09 Jul 2025 18:55:01 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/AgroSpace/coord/fields.kml">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\coord\fields.kml'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-IlY\u002BTZdg9TV/PLL2hT0Ht0JfzzYFY/DkqR3wM4OKuSg="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"4562"},{"Name":"Content-Type","Value":"application/octet-stream"},{"Name":"ETag","Value":"\u0022IlY\u002BTZdg9TV/PLL2hT0Ht0JfzzYFY/DkqR3wM4OKuSg=\u0022"},{"Name":"Last-Modified","Value":"Wed, 09 Jul 2025 18:55:01 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/AgroSpace/index.41dj2br57s.html">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"41dj2br57s"},{"Name":"integrity","Value":"sha256-SPkU9RHAluGN0qUjGDAk\u002BpqeyYB8AubV\u002BiXZQomnNno="},{"Name":"label","Value":"_content/AgroSpace/index.html"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"29514"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022SPkU9RHAluGN0qUjGDAk\u002BpqeyYB8AubV\u002BiXZQomnNno=\u0022"},{"Name":"Last-Modified","Value":"Wed, 09 Jul 2025 20:37:17 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/AgroSpace/index.html">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-SPkU9RHAluGN0qUjGDAk\u002BpqeyYB8AubV\u002BiXZQomnNno="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"29514"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022SPkU9RHAluGN0qUjGDAk\u002BpqeyYB8AubV\u002BiXZQomnNno=\u0022"},{"Name":"Last-Modified","Value":"Wed, 09 Jul 2025 20:37:17 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>

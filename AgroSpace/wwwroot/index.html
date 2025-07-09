@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroSpace - Карта полей</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px 300px;
+            gap: 20px;
+            height: calc(100vh - 200px);
+        }
+
+        .map-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sidebar, .fields-sidebar {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 20px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #667eea #f0f0f0;
+        }
+
+        /* Стили для WebKit браузеров (Chrome, Safari, Edge) */
+        .sidebar::-webkit-scrollbar, .fields-sidebar::-webkit-scrollbar {
+            width: 8px;
+            border-radius: 15px;
+        }
+
+        .sidebar::-webkit-scrollbar-track, .fields-sidebar::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 15px;
+            margin: 5px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb, .fields-sidebar::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover, .fields-sidebar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 5px;
+        }
+
+        .field-item {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .field-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .field-item-highlighted {
+            background: linear-gradient(135deg, #ff4444 0%, #ff6666 100%) !important;
+            color: white !important;
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(255, 68, 68, 0.3);
+            border-left: 4px solid #fff !important;
+        }
+
+        .field-item-highlighted .field-name {
+            color: white !important;
+        }
+
+        .field-item-highlighted .field-size {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        .field-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .field-size {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .result {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .error {
+            background: #ffebee;
+            border: 1px solid #f44336;
+            color: #c62828;
+            border-radius: 12px;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+
+        .coordinates-display {
+            background: #f0f8ff;
+            border: 1px solid #2196f3;
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        /* Скрываем подписи OpenLayers */
+        .ol-attribution {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌾 AgroSpace</h1>
+            <p>Интерактивная карта сельскохозяйственных полей</p>
+        </div>
+
+        <div class="main-content">
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+
+            <div class="sidebar">
+                <div class="section">
+                    <h3>📍 Проверка точки</h3>
+                    <form id="point-form">
+                        <div class="form-group">
+                            <label for="lat">Широта:</label>
+                            <input type="number" id="lat" step="any" placeholder="41.3380610642585" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lng">Долгота:</label>
+                            <input type="number" id="lng" step="any" placeholder="45.6962567581079" required>
+                        </div>
+                        <button type="submit" class="btn">Проверить принадлежность</button>
+                    </form>
+                    <div id="point-result"></div>
+                </div>
+
+                <div class="section">
+                    <h3>📏 Расстояние до центра</h3>
+                    <form id="distance-form">
+                        <div class="form-group">
+                            <label for="field-id">ID поля:</label>
+                            <input type="number" id="field-id" placeholder="1" required min="1" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="distance-lat">Широта:</label>
+                            <input type="number" id="distance-lat" step="any" placeholder="41.3380610642585" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="distance-lng">Долгота:</label>
+                            <input type="number" id="distance-lng" step="any" placeholder="45.6962567581079" required>
+                        </div>
+                        <button type="submit" class="btn">Вычислить расстояние</button>
+                    </form>
+                    <div id="distance-result"></div>
+                </div>
+
+                <div class="section">
+                    <h3>🎯 Координаты клика</h3>
+                    <div id="click-coordinates" class="coordinates-display">
+                        Кликните на карту для получения координат
+                    </div>
+                </div>
+            </div>
+
+            <div class="fields-sidebar">
+                <div class="section">
+                    <h3>📊 Информация о полях</h3>
+                    <div id="fields-info">
+                        <div class="loading">Загрузка данных...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.4.0/dist/ol.js"></script>
+    <script>
+        let map;
+        let fields = [];
+        let fieldPolygons = [];
+        let fieldMarkers = [];
+        let clickMarkerLayer = null;
+        let distanceLabelLayer = null;
+        let distanceLineLayer = null;
+
+        // Инициализация карты
+        function initMap() {
+            map = new ol.Map({
+                target: 'map',
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM({
+                            attributions: [] // Убираем подписи
+                        })
+                    })
+                ],
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([41.3380610642585, 45.6962567581079]),
+                    zoom: 13
+                })
+            });
+
+            // Обработчик клика по карте
+            map.on('click', function(e) {
+                const coords = ol.proj.toLonLat(e.coordinate);
+                const lat = coords[1].toFixed(12);
+                const lng = coords[0].toFixed(12);
+                
+                document.getElementById('click-coordinates').innerHTML = 
+                    `Широта: ${lat}<br>Долгота: ${lng}`;
+                
+                // Автозаполнение форм
+                document.getElementById('lat').value = lat;
+                document.getElementById('lng').value = lng;
+                document.getElementById('distance-lat').value = lat;
+                document.getElementById('distance-lng').value = lng;
+
+                // Очищаем результат расстояния при перемещении точки
+                document.getElementById('distance-result').innerHTML = '';
+                // Очищаем результат проверки принадлежности при перемещении точки
+                document.getElementById('point-result').innerHTML = '';
+
+                // Удаляем предыдущий маркер, если был
+                if (clickMarkerLayer) {
+                    map.removeLayer(clickMarkerLayer);
+                }
+                
+                // Удаляем подпись расстояния и линию, если были
+                if (distanceLabelLayer) {
+                    map.removeLayer(distanceLabelLayer);
+                    distanceLabelLayer = null;
+                }
+                if (distanceLineLayer) {
+                    map.removeLayer(distanceLineLayer);
+                    distanceLineLayer = null;
+                }
+                
+                // Сбрасываем подсветку поля в списке при перемещении точки
+                clearFieldListHighlight();
+                // Добавляем новый маркер
+                clickMarkerLayer = new ol.layer.Vector({
+                    source: new ol.source.Vector({
+                        features: [
+                            new ol.Feature({
+                                geometry: new ol.geom.Point(e.coordinate)
+                            })
+                        ]
+                    }),
+                    style: new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: 7,
+                            fill: new ol.style.Fill({ color: '#2196f3' }),
+                            stroke: new ol.style.Stroke({ color: '#fff', width: 2 })
+                        })
+                    })
+                });
+                map.addLayer(clickMarkerLayer);
+            });
+        }
+
+        // Загрузка данных о полях
+        async function loadFields() {
+            try {
+                const response = await fetch('/api/fields');
+                if (!response.ok) throw new Error('Ошибка загрузки данных');
+                
+                fields = await response.json();
+                displayFieldsInfo();
+                displayFieldsOnMap();
+            } catch (error) {
+                console.error('Ошибка загрузки полей:', error);
+                document.getElementById('fields-info').innerHTML = 
+                    '<div class="error">Ошибка загрузки данных о полях</div>';
+            }
+        }
+
+        // Отображение информации о полях
+        function displayFieldsInfo() {
+            const container = document.getElementById('fields-info');
+            container.innerHTML = fields.map(field => `
+                <div class="field-item" data-field-id="${field.id}" onclick="highlightField(${field.id})">
+                    <div class="field-name">${field.name}</div>
+                    <div class="field-size">Площадь: ${field.size} га</div>
+                </div>
+            `).join('');
+        }
+
+        // Отображение полей на карте
+        function displayFieldsOnMap() {
+            // Очистка предыдущих элементов
+            fieldPolygons.forEach(polygon => map.removeLayer(polygon));
+            fieldMarkers.forEach(marker => map.removeLayer(marker));
+            fieldPolygons = [];
+            fieldMarkers = [];
+
+            fields.forEach(field => {
+                // Создание полигона
+                const polygonCoords = field.locations.polygon.map(coord => 
+                    ol.proj.fromLonLat([coord.lng, coord.lat])
+                );
+                
+                const polygon = new ol.layer.Vector({
+                    source: new ol.source.Vector({
+                        features: [
+                            new ol.Feature({
+                                geometry: new ol.geom.Polygon([polygonCoords])
+                            })
+                        ]
+                    }),
+                    style: new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            color: '#667eea',
+                            width: 2
+                        }),
+                        fill: new ol.style.Fill({
+                            color: 'rgba(102, 126, 234, 0.2)'
+                        })
+                    })
+                });
+
+                map.addLayer(polygon);
+                fieldPolygons.push(polygon);
+
+                // Создание маркера центра с подписью
+                const marker = new ol.layer.Vector({
+                    source: new ol.source.Vector({
+                        features: [
+                            new ol.Feature({
+                                geometry: new ol.geom.Point(
+                                    ol.proj.fromLonLat([field.locations.center.lng, field.locations.center.lat])
+                                ),
+                                name: field.name,
+                                size: field.size
+                            })
+                        ]
+                    }),
+                    style: function(feature) {
+                        return [
+                            new ol.style.Style({
+                                image: new ol.style.Circle({
+                                    radius: 6,
+                                    fill: new ol.style.Fill({
+                                        color: '#ff4444'
+                                    }),
+                                    stroke: new ol.style.Stroke({
+                                        color: 'white',
+                                        width: 2
+                                    })
+                                })
+                            }),
+                            new ol.style.Style({
+                                geometry: function(feature) {
+                                    const geometry = feature.getGeometry();
+                                    const extent = geometry.getExtent();
+                                    const center = ol.extent.getCenter(extent);
+                                    const offset = [0, -20]; // Смещение текста выше маркера
+                                    return new ol.geom.Point([center[0] + offset[0], center[1] + offset[1]]);
+                                },
+                                text: new ol.style.Text({
+                                    text: `${feature.get('name')}\n${feature.get('size')} га`,
+                                    font: '12px Arial',
+                                    fill: new ol.style.Fill({
+                                        color: '#333'
+                                    }),
+                                    stroke: new ol.style.Stroke({
+                                        color: 'white',
+                                        width: 3
+                                    }),
+                                    textAlign: 'center',
+                                    offsetY: -10
+                                })
+                            })
+                        ];
+                    }
+                });
+
+                map.addLayer(marker);
+                fieldMarkers.push(marker);
+            });
+        }
+
+        // Подсветка поля
+        function highlightField(fieldId) {
+            const field = fields.find(f => f.id === fieldId);
+            if (field) {
+                // Центрируем карту на поле
+                map.getView().setCenter(
+                    ol.proj.fromLonLat([field.locations.center.lng, field.locations.center.lat])
+                );
+                
+                // Подсвечиваем выбранное поле
+                highlightSelectedField(fieldId);
+            }
+        }
+
+        // Подсветка выбранного поля
+        function highlightSelectedField(fieldId) {
+            // Сбрасываем все поля к обычному стилю
+            fieldPolygons.forEach((polygon, index) => {
+                const field = fields[index];
+                if (field) {
+                    polygon.setStyle(new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            color: fieldId && field.id === fieldId ? '#ff4444' : '#667eea',
+                            width: fieldId && field.id === fieldId ? 4 : 2
+                        }),
+                        fill: new ol.style.Fill({
+                            color: fieldId && field.id === fieldId ? 'rgba(255, 68, 68, 0.3)' : 'rgba(102, 126, 234, 0.2)'
+                        })
+                    }));
+                }
+            });
+        }
+
+        // Подсветка поля в списке и прокрутка к нему
+        function highlightFieldInList(fieldId) {
+            // Сбрасываем предыдущую подсветку
+            clearFieldListHighlight();
+            
+            // Находим элемент поля в списке
+            const fieldElement = document.querySelector(`[data-field-id="${fieldId}"]`);
+            if (fieldElement) {
+                // Добавляем класс подсветки
+                fieldElement.classList.add('field-item-highlighted');
+                
+                // Прокручиваем к элементу
+                fieldElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        }
+
+        // Сброс подсветки в списке
+        function clearFieldListHighlight() {
+            const highlightedElements = document.querySelectorAll('.field-item-highlighted');
+            highlightedElements.forEach(element => {
+                element.classList.remove('field-item-highlighted');
+            });
+        }
+
+        // Проверка принадлежности точки
+        async function checkPointLocation(lat, lng) {
+            try {
+                const response = await fetch('/api/fields/point-location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ lat, lng })
+                });
+
+                if (!response.ok) throw new Error('Ошибка запроса');
+                
+                const result = await response.json();
+                const resultDiv = document.getElementById('point-result');
+                
+                if (result === false) {
+                    resultDiv.innerHTML = '<div class="result">Точка не принадлежит ни одному полю</div>';
+                    // Сбрасываем подсветку всех полей
+                    highlightSelectedField(null);
+                    // Сбрасываем подсветку в списке
+                    clearFieldListHighlight();
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result">
+                            <strong>Точка находится в поле:</strong><br>
+                            ID: ${result.id}<br>
+                            Название: ${result.name}
+                        </div>
+                    `;
+                    // Подсвечиваем поле, в котором находится точка
+                    highlightSelectedField(result.id);
+                    
+                    // Подсвечиваем поле в списке и прокручиваем к нему
+                    highlightFieldInList(result.id);
+                    
+                    // Автоматически подставляем ID поля в форму расстояния
+                    document.getElementById('field-id').value = result.id;
+                }
+            } catch (error) {
+                console.error('Ошибка проверки точки:', error);
+                document.getElementById('point-result').innerHTML = 
+                    '<div class="error">Ошибка при проверке точки</div>';
+            }
+        }
+
+        // Вычисление расстояния
+        async function calculateDistance(fieldId, lat, lng) {
+            try {
+                const response = await fetch('/api/fields/distance', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ fieldId, lat, lng })
+                });
+
+                if (!response.ok) throw new Error('Ошибка запроса');
+                
+                const distance = await response.json();
+                const resultDiv = document.getElementById('distance-result');
+                
+                resultDiv.innerHTML = `
+                    <div class="result">
+                        <strong>Расстояние:</strong> ${distance.toFixed(2)} метров
+                    </div>
+                `;
+
+                // Подсвечиваем выбранное поле
+                highlightSelectedField(fieldId);
+
+                // Добавляем подпись к маркеру точки
+                addDistanceLabelToMarker(lat, lng, distance, fieldId);
+                
+                // Рисуем линию до центра поля
+                drawDistanceLine(lat, lng, fieldId);
+            } catch (error) {
+                console.error('Ошибка вычисления расстояния:', error);
+                document.getElementById('distance-result').innerHTML = 
+                    '<div class="error">Ошибка при вычислении расстояния</div>';
+            }
+        }
+
+        // Добавление подписи к маркеру точки
+        function addDistanceLabelToMarker(lat, lng, distance, fieldId) {
+            // Удаляем предыдущую подпись, если была
+            if (distanceLabelLayer) {
+                map.removeLayer(distanceLabelLayer);
+            }
+
+            const field = fields.find(f => f.id === fieldId);
+            if (!field) return;
+
+            distanceLabelLayer = new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    features: [
+                        new ol.Feature({
+                            geometry: new ol.geom.Point(ol.proj.fromLonLat([lng, lat]))
+                        })
+                    ]
+                }),
+                style: new ol.style.Style({
+                    text: new ol.style.Text({
+                        text: `${distance.toFixed(1)} м`,
+                        font: 'bold 12px Arial',
+                        fill: new ol.style.Fill({
+                            color: '#333'
+                        }),
+                        stroke: new ol.style.Stroke({
+                            color: 'white',
+                            width: 3
+                        }),
+                        offsetY: -25,
+                        textAlign: 'center'
+                    })
+                })
+            });
+
+            map.addLayer(distanceLabelLayer);
+        }
+
+        // Рисование линии до центра поля
+        function drawDistanceLine(lat, lng, fieldId) {
+            // Удаляем предыдущую линию, если была
+            if (distanceLineLayer) {
+                map.removeLayer(distanceLineLayer);
+            }
+
+            const field = fields.find(f => f.id === fieldId);
+            if (!field) return;
+
+            const startPoint = ol.proj.fromLonLat([lng, lat]);
+            const endPoint = ol.proj.fromLonLat([field.locations.center.lng, field.locations.center.lat]);
+
+            distanceLineLayer = new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    features: [
+                        new ol.Feature({
+                            geometry: new ol.geom.LineString([startPoint, endPoint])
+                        })
+                    ]
+                }),
+                style: new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: '#ff4444',
+                        width: 2,
+                        lineDash: [5, 5]
+                    })
+                })
+            });
+
+            map.addLayer(distanceLineLayer);
+        }
+
+        // Обработчики форм
+        document.getElementById('point-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const lat = parseFloat(document.getElementById('lat').value);
+            const lng = parseFloat(document.getElementById('lng').value);
+            checkPointLocation(lat, lng);
+        });
+
+        document.getElementById('distance-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const fieldId = parseInt(document.getElementById('field-id').value);
+            const lat = parseFloat(document.getElementById('distance-lat').value);
+            const lng = parseFloat(document.getElementById('distance-lng').value);
+            calculateDistance(fieldId, lat, lng);
+        });
+
+        // Обработчик изменения ID поля в форме расстояния
+        document.getElementById('field-id').addEventListener('change', function(e) {
+            const fieldId = parseInt(e.target.value);
+            if (fieldId > 0) {
+                highlightSelectedField(fieldId);
+            }
+        });
+
+        // Инициализация приложения
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+            loadFields();
+        });
+    </script>
+</body>
+</html> 
